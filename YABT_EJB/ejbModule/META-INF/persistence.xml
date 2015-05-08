@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+  http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="yabt" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>java:app/jdbc/yabt-ds</jta-data-source>
+
+		<!-- Here we list all the Entity classes we want ORM to know about -->
+		<class>edu.psu.yabt.entity.Link</class>
+		<class>edu.psu.yabt.entity.Notification</class>
+		<class>edu.psu.yabt.entity.User</class>
+		<class>edu.psu.yabt.entity.Activity</class>
+
+		<properties>
+			<!-- This tells ORM what kind of database we're connecting to -->
+			<property name="eclipselink.target-database"
+				value="org.eclipse.persistence.platform.database.H2Platform" />
+			<!-- This tells ORM what Database Driver to use so it can talk to the 
+				database correctly -->
+			<property name="eclipselink.jdbc.batch-writing" value="Buffered" />
+			<!-- This property tells ORM to find all Entity classes and try to automatically 
+				build tables in the database for them -->
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.logging.level" value="INFO" />
+		</properties>
+	</persistence-unit>
+</persistence>

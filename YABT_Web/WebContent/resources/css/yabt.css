@@ -1,0 +1,72 @@
+body {
+	background-image:url('../img/desktop.jpg');
+}
+
+header {
+	height: 50px;
+}
+
+header {
+	/* Fallback Color */
+	background: #F4F8F9;
+	/* Firefox 3.6+ */
+	background-image: -moz-linear-gradient(#7CBC25, #608E1D);
+	/* Safari 4+, Chrome 1+ */
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7CBC25), to(#608E1D));
+	/* Safari 5.1+, Chrome 10+ */
+	background-image: -webkit-linear-gradient(#7CBC25, #608E1D); 
+	/* IE */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7CBC25', endColorstr='#608E1D');
+}
+
+/* Logo */
+
+span.appName {
+	color: #FFFFFF;
+	vertical-align: bottom;
+	text-shadow: 1px 1px 3px #000000;
+	font-size: 200%;
+	margin: 15px 0 10px 5px;
+	font-family: Helvetica,sans-serif;
+	position: absolute;
+}
+
+span.logo a {
+	display: block;
+	width: 221px;
+	height: 30px;
+	background: url('../img/logo.png') no-repeat;
+	float: left;
+	margin: 15px 0 0 5px;
+	text-indent: -5000px;
+}
+
+span.userWelcome {
+	float: right;
+	vertical-align: top;
+	margin: 5px 5px 0 0;
+	color: #FFFFFF;
+	font-family: Helvetica,sans-serif;
+}
+
+span.logout {
+	float: right;
+	vertical-align: top;
+	margin: 30px -80px 0 0;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-family: Helvetica,sans-serif;
+}
+
+.wrapper {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.message {
+	color: #ff0000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}

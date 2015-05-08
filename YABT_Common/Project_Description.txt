@@ -1,0 +1,3 @@
+Houses entity beans for ORM (Hibernate) as well as utility classes and other code common
+to all sections of YABT. No code should be housed here that should only run on the server
+or only on the client.

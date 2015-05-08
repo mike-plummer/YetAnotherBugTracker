@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<title>Yet Another Bug Tracker</title>
+
+	<link rel="stylesheet" type="text/css"href="resources/css/ext-all.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/yabt.css" />
+	<link type="text/css" rel="stylesheet" href="resources/dhtmlxgantt/dhtmlxgantt.css">
+	
+	<script type="text/javascript" src="resources/js/ext-all-debug.js"></script>
+	<script type="text/javascript" src="resources/js/src/ux/PreviewPlugin.js"></script>
+	
+	<script type="text/javascript" src="resources/js/yabt.js"></script>
+	<script type="text/javascript" src="resources/js/yabt_graph.js"></script>
+	<script type="text/javascript" src="resources/js/yabt_gantt.js"></script>
+	<script type="text/javascript" src="resources/js/yabt_notification.js"></script>
+	
+    <script type="text/javascript" src="resources/dhtmlxgantt/dhtmlxcommon.js"></script>
+    <script type="text/javascript" src="resources/dhtmlxgantt/dhtmlxgantt.js"></script>
+	
+	<!-- Sets the basepath for the library if not in same directory -->
+	<script type="text/javascript">
+	      mxBasePath = 'resources/mxgraph';
+	</script>
+	
+	<!-- Loads and initializes the library -->
+	<script type="text/javascript" src="resources/mxgraph/js/mxClient.js"></script>
+	
+	<script>
+	Ext.onReady(function() {
+
+		init();
+		buildDetailToolbar();
+		buildItemDetailPanel();
+		buildItemOverviewPanel();
+		buildItemLinksPanel();
+		buildAttachmentsPanel();
+		buildHistoryPanel();
+		
+		if( params.admin != 'true' && params.taskData.assignee != params.username )
+	    {
+			Ext.getCmp('reassignButton').disable();
+			Ext.getCmp('advanceMenu').disable();
+		}
+		
+		var flowChartPanel = Ext.create('Ext.panel.Panel', {
+			title : 'Vertical Traceability',
+			collapsible:true,
+			bodyPadding:10,
+			id : 'horizontalGraphPanel',
+			width : 700,
+			height : 250
+	   });
+		
+		var flowChartPanel = Ext.create('Ext.panel.Panel', {
+			title : 'Vertical Traceability',
+			collapsible:true,
+			bodyPadding:10,
+			id : 'verticalGraphPanel',
+			width : 700,
+			height : 250
+	   });
+		
+		var ganttChartPanel = Ext.create('Ext.panel.Panel', {
+			title : ' Horizontal Traceability',
+			collapsible:true,
+			bodyPadding:10,
+			id : 'ganttPanel',
+			width : 700,
+			height : 250
+	   });
+		
+		var container = Ext.create('Ext.container.Container', {
+			items : [
+					Ext.getCmp('toolbar'),
+					{
+						xtype : 'container',
+						layout : {
+							type : 'table',
+							columns : 1
+						},
+						items : [
+							Ext.getCmp('itemOverviewPanel'),
+							Ext.getCmp('itemDetailPanel'),
+							Ext.getCmp('itemLinksPanel'),
+							Ext.getCmp('itemAttachmentsPanel'),
+							Ext.getCmp('itemHistoryPanel'),
+							flowChartPanel,
+							ganttChartPanel
+							]
+				}]
+		});
+		container.render('content');
+		
+		var flowChartPanelDomElement = flowChartPanel.getEl().dom.children[1];
+		buildFlowChart(flowChartPanelDomElement);
+		
+		var ganttChartPanelDomElement = ganttChartPanel.getEl().dom.children[1];
+		buildGanttChart(ganttChartPanelDomElement.id);
+		
+		var userWelcomeSpan = Ext.DomQuery.selectNode("span[class=userWelcome]");
+		userWelcomeSpan.innerHTML = 'Welcome, '+params.username;
+	}); //end onReady
+    </script>
+
+</head>
+<body>
+	<header>
+		<div class="wrapper">
+			<span>
+				<span class="logo">
+					<a href="dashboard.html">Yet Another Bug Tracker</a>
+				</span>
+				<span class="appName">Yet Another Bug Tracker</span>
+			</span> 
+			<span class="userWelcome"></span>
+			<span class="logout"><a href="j_spring_security_logout">Logout</a></span>
+		</div>
+		<!--.wrapper-->
+	</header>
+	<div id="content" ></div>
+</body>
+</html>

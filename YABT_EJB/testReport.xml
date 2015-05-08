@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<project name="Demo ant junit" default="junit" basedir=".">
+
+  <property name="dir.build" value="build"/>
+  <property name="dir.src" value="ejbModule"/>
+  <property name="dir.test" value="test"/>
+  <property environment="env"/>
+
+  <path id="classpath.project">
+    <pathelement path="${dir.build}"/>
+    <pathelement path="../YABT_Common/build/classes"/>
+  </path>
+
+  <target name="install.junit">
+    <fail unless="env.JUNIT_HOME">
+      The JUNIT_HOME environment variable must be set.
+    </fail>
+    <fail unless="env.GLASSFISH_HOME">
+      The GLASSFISH_HOME environment variable must be set.
+    </fail>
+
+    <available property="junit.already.installed" file="${ant.home}/lib/junit.jar"/>
+
+    <copy file="${env.JUNIT_HOME}/junit.jar"
+          todir="${ant.home}/lib"
+          failonerror="true"/>
+   
+    <fail unless="junit.already.installed">
+      junit.jar was not found in ANT_HOME/lib prior to this 
+      build, so it was copied for you. Please try your build again.
+    </fail>
+  </target>
+
+  <target name="prepare" depends="install.junit">
+    <mkdir dir="${dir.build}"/>
+  </target>
+
+  <target name="clean"
+          description="Remove all generated files.">
+    <delete dir="${dir.build}"/>
+  </target>
+
+  <target name="compile" depends="prepare" description="Compile all source code.">
+    <javac srcdir="${dir.src}" destdir="${dir.build}">
+      <classpath refid="classpath.project"/>
+      <classpath>
+      	<fileset dir="../YABT/EarContent/lib" includes="*.jar" />
+      	<fileset dir="${env.GLASSFISH_HOME}/modules" />
+      	<fileset dir="${env.GLASSFISH_HOME}/modules/endorsed" />
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="junit" depends="compile">
+    <junit printsummary="on" fork="false" haltonfailure="false">
+
+      <classpath>
+      	<fileset dir="${env.JUNIT_HOME}">
+      		<include name="junit.jar"/>
+      	</fileset>
+      	<pathelement path="${classpath}"/>
+      </classpath>
+      <formatter type="xml"/>
+
+      <batchtest todir="${dir.build}">
+        <fileset dir="${dir.test}">
+          <include name="**/*Test.java"/>
+          <exclude name="**/AllTests.java"/>
+        </fileset>
+      </batchtest>
+
+    </junit>
+
+    <junitreport todir="${dir.build}">
+      <fileset dir="${dir.build}">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report format="frames" todir="${dir.build}"/>
+    </junitreport>
+
+    <pathconvert dirsep="/" property="reportUrl">
+      <path>
+        <pathelement location="${dir.build}/index.html"/>
+      </path>
+    </pathconvert>
+  </target>
+
+</project>

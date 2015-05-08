@@ -1,0 +1,3 @@
+High-level Enterprise Archive (EAR) that forms the application. No code should go directly
+in this project - it should go into the YABT sub-projects which are compiled and combined
+into this EAR project. Libraries needed by server-side code should be housed in this project.

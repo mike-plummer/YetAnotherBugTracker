@@ -1,0 +1,2 @@
+Web application and associated web services. This project can either provide the user
+interface or web services to drive a user interface that is not Java-based.

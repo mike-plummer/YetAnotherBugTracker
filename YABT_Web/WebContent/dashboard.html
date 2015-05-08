@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title>Yet Another Bug Tracker</title>
+
+<link rel="stylesheet" type="text/css" href="resources/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/yabt.css" />
+
+<script type="text/javascript" src="resources/js/ext-all-debug.js"></script>
+<script type="text/javascript" src="resources/js/yabt.js"></script>
+<script type="text/javascript" src="resources/js/yabt_graph.js"></script>
+
+<script>
+	Ext.require([
+             'Ext.grid.*',
+             'Ext.data.*',
+             'Ext.util.*',
+             'Ext.chart.*',
+             'Ext.toolbar.Paging',
+             'Ext.ux.PreviewPlugin',
+             'Ext.ModelManager',
+             'Ext.tip.QuickTipManager'
+         ]);
+         
+	Ext.onReady(function() {
+
+		init();
+		
+		buildChart();
+		
+		buildDashboardToolbar();
+		buildMyAssignmentsPanel();
+		buildChartPanel();
+		buildGlobalActivityPanel();
+		buildHistoricChart();
+		var container = Ext.create('Ext.container.Container', {
+			items : [
+					Ext.getCmp('toolbar'),
+					{
+						xtype : 'container',
+						layout : {
+							type : 'table',
+							columns : 2
+						},
+						items : [ Ext.getCmp('myAssignmentPanel'),
+								Ext.getCmp('chartPanel'),
+								Ext.getCmp('globalActivityPanel'),
+								Ext.getCmp('historicChartPanel')]
+					} ]
+		});
+		container.render('content');
+		
+		var userWelcomeSpan = Ext.DomQuery.selectNode("span[class=userWelcome]");
+		userWelcomeSpan.innerHTML = 'Welcome, '+params.username;
+	}); //end onReady
+</script>
+</head>
+<body>
+	<header>
+		<div class="wrapper">
+			<span>
+				<span class="logo">
+					<a href="dashboard.html">Yet Another Bug Tracker</a>
+				</span>
+				<span class="appName">Yet Another Bug Tracker</span>
+			</span> 
+			<span class="userWelcome"></span>
+			<span class="logout"><a href="j_spring_security_logout">Logout</a></span>
+		</div>
+		<!--.wrapper-->
+	</header>
+	<div id="content" ></div>
+</body>
+</html>

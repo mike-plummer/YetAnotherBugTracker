@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd
+                    http://www.springframework.org/schema/context
+                    http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+
+	<security:http>
+		<security:intercept-url pattern="/login.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<security:intercept-url pattern="/**" access="ROLE_YABT_USER" />
+		<security:logout logout-success-url="/login.jsp?logout=true" />
+		<security:form-login login-page="/login.jsp" 
+							 default-target-url="/dashboard.html" 
+							 authentication-failure-url="/login.jsp?login_error=true" 
+							 always-use-default-target="true"/>
+ 	</security:http>
+	
+	<security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="password" authorities="ROLE_YABT_USER" />
+                <security:user name="janeDoe" password="password" authorities="ROLE_YABT_USER" />
+                <security:user name="admin" password="password" authorities="ROLE_YABT_USER,ROLE_YABT_ADMIN" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+    
+<!-- UN-COMMENT TO ENABLE LDAP INTEGRATION -->
+<!--   Must input valid LDAP URL in ldap-server element -->
+<!-- 
+	<security:ldap-server id="ldapServer" url="ldap://192.168.1.1:389/dc=yabt,dc=psu,dc=edu" />
+	<security:authentication-manager>
+		<security:ldap-authentication-provider 
+           user-search-filter="(uid={0})"
+           user-search-base="cn=users"
+           group-search-filter="(memberUid={1})"
+           group-search-base="cn=groups"
+           group-role-attribute="cn"
+           role-prefix="ROLE_"
+           user-details-class="inetOrgPerson">
+         </security:ldap-authentication-provider>
+    </security:authentication-manager>
+-->
+</beans>

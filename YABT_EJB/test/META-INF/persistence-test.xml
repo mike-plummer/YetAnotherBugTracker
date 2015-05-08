@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+  http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="yabtDomain" transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<!-- Here we list all the Entity classes we want ORM to know about -->
+		<class>edu.psu.yabt.entity.User</class>
+		<class>edu.psu.yabt.entity.Link</class>
+		<class>edu.psu.yabt.entity.Notification</class>
+
+		<properties>
+			<!-- Username for database connection -->
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<!-- This tells ORM what kind of database we're connecting to -->
+			<property name="eclipselink.target-database"
+				value="org.eclipse.persistence.platform.database.H2Platform" />
+			<!-- This tells ORM what Database Driver to use so it can talk to the 
+				database correctly -->
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+			<!-- This tells ORM where the database is. This URL represents an H2 in-memory 
+				database named "yabt" -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:yabt" />
+			<property name="eclipselink.ddl-generation.output-mode"
+				value="database" />
+			<property name="eclipselink.jdbc.batch-writing" value="Buffered" />
+			<!-- This property tells ORM to find all Entity classes and try to automatically 
+				build tables in the database for them -->
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.logging.level" value="INFO" />
+		</properties>
+	</persistence-unit>
+</persistence>
